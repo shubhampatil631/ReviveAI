@@ -1,0 +1,16 @@
+transaction_id,customer_id,customer_name,customer_email,customer_phone,event_type,amount,currency,failure_reason,payment_method,opt_out,created_at
+TXN_1001,CUST_501,Aditi Sharma,aditi.sharma@example.com,+919876543210,subscription_dunning,4999,INR,bank_decline,credit_card,false,2026-08-20T10:15:00Z
+TXN_1002,CUST_502,Rajesh Kumar,rajesh.k@b2bservices.in,+919812345678,overdue_invoice,25000,INR,invoice_terms_breach,net_banking,false,2026-08-15T09:00:00Z
+TXN_1003,CUST_503,Vikram Malhotra,vikram.m@example.com,+919988776655,payment_failure,1499,INR,insufficient_funds,upi,false,2026-08-18T14:30:00Z
+TXN_1004,CUST_504,Priya Patel,priya.patel@example.com,+919765432109,checkout_abandonment,3499,INR,cart_abandoned_shipping,debit_card,false,2026-08-21T08:20:00Z
+TXN_1005,CUST_505,Siddharth Verma,siddharth.v@techcorp.in,+919898989898,overdue_invoice,50000,INR,invoice_terms_breach,bank_transfer,false,2026-08-10T11:00:00Z
+TXN_1006,CUST_506,Neha Gupta,neha.gupta@example.com,+919123456789,subscription_dunning,999,INR,expired_card,credit_card,false,2026-08-19T16:45:00Z
+TXN_1007,CUST_507,Amitabh Das,amitabh.d@example.com,+919234567890,payment_failure,7999,INR,gateway_timeout,net_banking,false,2026-08-21T12:00:00Z
+TXN_1008,CUST_508,Rohan Mehta,rohan.m@dnduser.com,+919345678901,subscription_dunning,2999,INR,insufficient_funds,upi,true,2026-08-20T18:30:00Z
+TXN_1009,CUST_509,Kavita Rao,kavita.rao@example.com,+919456789012,checkout_abandonment,1899,INR,cart_abandoned_payment,upi,false,2026-08-21T15:10:00Z
+TXN_1010,CUST_510,Suresh Menon,suresh.m@b2bhub.in,+919567890123,overdue_invoice,15000,INR,invoice_terms_breach,net_banking,false,2026-08-12T10:00:00Z
+TXN_1011,CUST_511,Ananya Roy,ananya.r@example.com,+919678901234,subscription_dunning,1299,INR,mandate_lapse,auto_debit,false,2026-08-17T11:20:00Z
+TXN_1012,CUST_512,Deepak Joshi,deepak.j@example.com,+919789012345,payment_failure,5499,INR,bank_decline,credit_card,false,2026-08-20T09:40:00Z
+TXN_1013,CUST_513,Meera Iyer,meera.iyer@example.com,+919890123456,checkout_abandonment,899,INR,cart_abandoned_shipping,upi,false,2026-08-21T16:00:00Z
+TXN_1014,CUST_514,Varun Nair,varun.nair@enterprise.com,+919901234567,overdue_invoice,75000,INR,invoice_terms_breach,bank_transfer,false,2026-08-05T14:00:00Z
+TXN_1015,CUST_515,Pooja Saxena,pooja.s@example.com,+919012345678,subscription_dunning,3999,INR,expired_card,credit_card,false,2026-08-19T13:15:00Z

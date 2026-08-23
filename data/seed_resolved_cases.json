@@ -1,0 +1,72 @@
+[
+  {
+    "case_id": "SEED_001",
+    "event_type": "subscription_dunning",
+    "root_cause": "bank_decline",
+    "amount": 4999,
+    "amount_bucket": "medium",
+    "action": "RETRY_PAYMENT",
+    "outcome": "recovered",
+    "summary": "subscription_dunning caused by bank_decline, amount 4999, action taken RETRY_PAYMENT, outcome recovered"
+  },
+  {
+    "case_id": "SEED_002",
+    "event_type": "subscription_dunning",
+    "root_cause": "expired_card",
+    "amount": 2999,
+    "amount_bucket": "medium",
+    "action": "SEND_PAYMENT_METHOD_UPDATE_REQUEST",
+    "outcome": "recovered",
+    "summary": "subscription_dunning caused by expired_card, amount 2999, action taken SEND_PAYMENT_METHOD_UPDATE_REQUEST, outcome recovered"
+  },
+  {
+    "case_id": "SEED_003",
+    "event_type": "overdue_invoice",
+    "root_cause": "invoice_terms_breach",
+    "amount": 25000,
+    "amount_bucket": "high",
+    "action": "SEND_INVOICE_REMINDER",
+    "outcome": "recovered",
+    "summary": "overdue_invoice caused by invoice_terms_breach, amount 25000, action taken SEND_INVOICE_REMINDER, outcome recovered"
+  },
+  {
+    "case_id": "SEED_004",
+    "event_type": "checkout_abandonment",
+    "root_cause": "cart_abandoned_shipping",
+    "amount": 3499,
+    "amount_bucket": "medium",
+    "action": "GENERATE_CHECKOUT_RECOVERY_LINK",
+    "outcome": "recovered",
+    "summary": "checkout_abandonment caused by cart_abandoned_shipping, amount 3499, action taken GENERATE_CHECKOUT_RECOVERY_LINK, outcome recovered"
+  },
+  {
+    "case_id": "SEED_005",
+    "event_type": "payment_failure",
+    "root_cause": "insufficient_funds",
+    "amount": 1499,
+    "amount_bucket": "low",
+    "action": "RETRY_PAYMENT",
+    "outcome": "escalated",
+    "summary": "payment_failure caused by insufficient_funds, amount 1499, action taken RETRY_PAYMENT, outcome escalated after max attempts reached"
+  },
+  {
+    "case_id": "SEED_006",
+    "event_type": "payment_failure",
+    "root_cause": "gateway_timeout",
+    "amount": 7999,
+    "amount_bucket": "high",
+    "action": "RETRY_PAYMENT",
+    "outcome": "recovered",
+    "summary": "payment_failure caused by gateway_timeout, amount 7999, action taken RETRY_PAYMENT, outcome recovered"
+  },
+  {
+    "case_id": "SEED_007",
+    "event_type": "subscription_dunning",
+    "root_cause": "mandate_lapse",
+    "amount": 1299,
+    "amount_bucket": "low",
+    "action": "SEND_PAYMENT_METHOD_UPDATE_REQUEST",
+    "outcome": "recovered",
+    "summary": "subscription_dunning caused by mandate_lapse, amount 1299, action taken SEND_PAYMENT_METHOD_UPDATE_REQUEST, outcome recovered"
+  }
+]

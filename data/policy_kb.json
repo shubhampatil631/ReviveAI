@@ -1,0 +1,26 @@
+[
+  {
+    "id": "POL_001",
+    "policy_type": "retry_policy",
+    "section": "Retry Limits and Rules",
+    "text": "Payment retries must strictly not exceed 3 attempts per case. Retries for bank_decline and gateway_timeout should be delayed by at least 30 minutes. If 3 retries fail, auto-escalate to human."
+  },
+  {
+    "id": "POL_002",
+    "policy_type": "communication_policy",
+    "section": "Customer Contact Restrictions",
+    "text": "Customer contact messages (SMS, email, WhatsApp) require a 24-hour cooldown between messages. Any customer with opt_out set to true must never be contacted automatically under any circumstance."
+  },
+  {
+    "id": "POL_003",
+    "policy_type": "escalation_policy",
+    "section": "Human Escalation Thresholds",
+    "text": "High value B2B overdue invoices (> ₹50,000) with broken promises to pay or failed second reminders must be escalated directly to Tier 2 Account Managers."
+  },
+  {
+    "id": "POL_004",
+    "policy_type": "checkout_policy",
+    "section": "Checkout Recovery Discount & Link Expiry",
+    "text": "Checkout recovery links expire after 48 hours. Optional recovery incentives (e.g. 5% discount) are allowed for cart abandonment with amount > ₹2,000."
+  }
+]

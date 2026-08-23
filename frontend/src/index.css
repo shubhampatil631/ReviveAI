@@ -1,0 +1,379 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap');
+
+:root {
+  /* Razorpay Palette */
+  --rz-navy-dark: #02042b;
+  --rz-navy-header: #070d24;
+  --rz-navy-surface: #0c1433;
+  --rz-navy-border: rgba(255, 255, 255, 0.12);
+  
+  --rz-blue-primary: #0284c7;
+  --rz-blue-deep: #0052cc;
+  --rz-blue-light: #e0f2fe;
+  --rz-blue-hover: #0369a1;
+  --rz-cyan-accent: #00d2ff;
+  
+  --rz-emerald: #10b981;
+  --rz-emerald-light: #ecfdf5;
+  --rz-emerald-border: #a7f3d0;
+
+  --rz-amber: #f59e0b;
+  --rz-amber-light: #fffbeb;
+  --rz-amber-border: #fde68a;
+
+  --rz-rose: #ef4444;
+  --rz-rose-light: #fff1f2;
+  --rz-rose-border: #fecdd3;
+
+  --rz-bg-page: #f8fafc;
+  --rz-bg-card: #ffffff;
+  --rz-border-color: #e2e8f0;
+  --rz-border-hover: #cbd5e1;
+  
+  --text-main: #0f172a;
+  --text-secondary: #334155;
+  --text-muted: #64748b;
+  --text-dim: #94a3b8;
+
+  --rz-card-shadow: 0 10px 30px -5px rgba(2, 132, 199, 0.07), 0 4px 12px rgba(0, 0, 0, 0.03);
+  --rz-card-shadow-hover: 0 20px 40px -8px rgba(2, 132, 199, 0.14), 0 8px 16px rgba(0, 0, 0, 0.05);
+}
+
+html, body, #root {
+  width: 100%;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background-color: var(--rz-bg-page);
+  color: var(--text-main);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, .font-heading {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+/* Razorpay Dark Hero Styling */
+.rz-hero-bg {
+  background-color: var(--rz-navy-dark);
+  background-image: 
+    radial-gradient(circle at 50% -20%, rgba(2, 132, 199, 0.35) 0%, transparent 60%),
+    radial-gradient(circle at 85% 30%, rgba(0, 210, 255, 0.12) 0%, transparent 40%),
+    linear-gradient(180deg, #070d24 0%, #02042b 100%);
+  color: #ffffff;
+  position: relative;
+}
+
+.rz-hero-grid {
+  background-image: linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+/* Razorpay Card Styling */
+.rz-card {
+  background: var(--rz-bg-card);
+  border: 1px solid var(--rz-border-color);
+  border-radius: 16px;
+  box-shadow: var(--rz-card-shadow);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  width: 100%;
+}
+
+.rz-card:hover {
+  box-shadow: var(--rz-card-shadow-hover);
+  border-color: #cbd5e1;
+  transform: translateY(-2px);
+}
+
+.rz-card-dark {
+  background: var(--rz-navy-surface);
+  border: 1px solid var(--rz-navy-border);
+  border-radius: 16px;
+  color: #ffffff;
+}
+
+/* Razorpay Buttons */
+.btn-rz-primary {
+  background: linear-gradient(135deg, #0284c7 0%, #0052cc 100%);
+  color: #ffffff;
+  border: none;
+  padding: 10px 22px;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 0.875rem;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 14px rgba(2, 132, 199, 0.35);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-rz-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(2, 132, 199, 0.45);
+  background: linear-gradient(135deg, #0369a1 0%, #0040a8 100%);
+}
+
+.btn-rz-primary:active {
+  transform: translateY(0);
+}
+
+.btn-rz-primary .btn-arrow {
+  transition: transform 0.2s ease;
+}
+
+.btn-rz-primary:hover .btn-arrow {
+  transform: translateX(4px);
+}
+
+.btn-rz-secondary {
+  background: #ffffff;
+  color: var(--rz-navy-dark);
+  border: 1px solid var(--rz-border-hover);
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.875rem;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+.btn-rz-secondary:hover {
+  background: #f8fafc;
+  border-color: #0284c7;
+  color: #0284c7;
+  transform: translateY(-1px);
+}
+
+.btn-rz-outline-light {
+  background: rgba(255, 255, 255, 0.06);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.875rem;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+  backdrop-filter: blur(8px);
+}
+
+.btn-rz-outline-light:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: #ffffff;
+  transform: translateY(-1px);
+}
+
+/* Razorpay Badges */
+.rz-badge {
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  text-transform: uppercase;
+}
+
+.badge-recovered {
+  background: var(--rz-emerald-light);
+  color: #047857;
+  border: 1px solid var(--rz-emerald-border);
+}
+
+.badge-blocked {
+  background: var(--rz-rose-light);
+  color: #b91c1c;
+  border: 1px solid var(--rz-rose-border);
+}
+
+.badge-escalated {
+  background: var(--rz-amber-light);
+  color: #b45309;
+  border: 1px solid var(--rz-amber-border);
+}
+
+.badge-detected, .badge-executing, .badge-decided {
+  background: var(--rz-blue-light);
+  color: #0369a1;
+  border: 1px solid #bae6fd;
+}
+
+/* Live Pulse Dot */
+.rz-pulse-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #10b981;
+  box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+  animation: pulse-glow 1.8s infinite;
+  display: inline-block;
+}
+
+@keyframes pulse-glow {
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+  }
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 8px rgba(16, 185, 129, 0);
+  }
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+  }
+}
+
+/* Table Styling */
+.table-container {
+  width: 100%;
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+th {
+  padding: 14px 20px;
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #475569;
+  background-color: #f1f5f9;
+  border-bottom: 1px solid var(--rz-border-color);
+}
+
+td {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--rz-border-color);
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}
+
+tr:last-child td {
+  border-bottom: none;
+}
+
+tr:hover td {
+  background-color: #f8fafc;
+}
+
+/* Inputs and Selects */
+input, select {
+  font-family: 'Inter', sans-serif;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+input:focus, select:focus {
+  border-color: var(--rz-blue-primary) !important;
+  box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.2) !important;
+}
+
+/* Modal / Drawer Overlay */
+.drawer-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(2, 4, 43, 0.65);
+  backdrop-filter: blur(8px);
+  z-index: 999;
+  display: flex;
+  justify-content: flex-end;
+  animation: fadeIn 0.2s ease-out;
+}
+
+.drawer-content {
+  width: 100%;
+  max-width: 660px;
+  height: 100%;
+  background: #ffffff;
+  border-left: 1px solid var(--rz-border-color);
+  padding: 32px;
+  overflow-y: auto;
+  box-shadow: -15px 0 40px rgba(0, 0, 0, 0.2);
+  animation: slideIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideIn {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+
+.timeline-item {
+  position: relative;
+  padding-left: 36px;
+  padding-bottom: 28px;
+  border-left: 2px solid #e2e8f0;
+}
+
+.timeline-item:last-child {
+  border-left: 2px solid transparent;
+}
+
+.timeline-dot {
+  position: absolute;
+  left: -9px;
+  top: 0;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--rz-blue-primary);
+  border: 3px solid #ffffff;
+  box-shadow: 0 2px 6px rgba(2, 132, 199, 0.4);
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
