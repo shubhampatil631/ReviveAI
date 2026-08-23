@@ -20,6 +20,11 @@
 
 ---
 
+### GitHub Repository URL
+`https://github.com/shubhampatil631/ReviveAI.git`
+
+---
+
 ### Project Objectives
 **What does it solve?**
 
