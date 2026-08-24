@@ -34,7 +34,7 @@ class OllamaAdapter:
                 "stream": False
             }
             try:
-                async with httpx.AsyncClient(timeout=15.0) as client:
+                async with httpx.AsyncClient(timeout=60.0) as client:
                     resp = await client.post(self.endpoint, json=payload)
                     if resp.status_code == 200:
                         data = resp.json()

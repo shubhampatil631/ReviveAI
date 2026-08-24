@@ -1,0 +1,5 @@
+transaction_id,customer_id,customer_name,customer_email,customer_phone,event_type,amount,currency,failure_reason,payment_method,opt_out,created_at
+TXN_1016,CUST_516,Karan Kapoor,karan.kapoor@example.com,+919112233445,subscription_dunning,6499,INR,bank_decline,credit_card,false,2026-08-23T11:00:00Z
+TXN_1017,CUST_517,Divya Singhania,divya.s@fintech.in,+919223344556,overdue_invoice,35000,INR,invoice_terms_breach,bank_transfer,false,2026-08-14T10:30:00Z
+TXN_1018,CUST_518,Aarav Sen,aarav.sen@example.com,+919334455667,checkout_abandonment,4299,INR,cart_abandoned_payment,upi,false,2026-08-23T14:15:00Z
+TXN_1019,CUST_519,Simran Kaur,simran.k@dnduser.org,+919445566778,subscription_dunning,1999,INR,insufficient_funds,auto_debit,true,2026-08-23T16:50:00Z

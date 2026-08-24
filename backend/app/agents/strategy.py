@@ -26,8 +26,14 @@ class ActionCatalog:
     @classmethod
     def validate_action(cls, action: str) -> str:
         act = str(action).strip().upper()
-        if act in cls.BOUNDED_ACTION_CATALOG:
-            return act
+        act_clean = act.replace("*", "").replace("'", "").replace('"', "").replace("`", "").strip()
+        if act_clean in cls.BOUNDED_ACTION_CATALOG:
+            return act_clean
+        
+        for cat_act in cls.BOUNDED_ACTION_CATALOG:
+            if cat_act in act:
+                return cat_act
+
         logger.warning(f"[ActionCatalog] Un-mapped action '{action}' requested. Fallback to 'ESCALATE_TO_HUMAN'.")
         return "ESCALATE_TO_HUMAN"
 
@@ -148,16 +154,27 @@ class DecisionComposer:
         resp = await llm_router.route_call("reasoning", prompt, system_prompt)
         if resp:
             try:
-                if "ACTION:" in resp and "RATIONALE:" in resp:
-                    parts = resp.split("RATIONALE:", 1)
-                    act_part = parts[0].replace("ACTION:", "").strip().rstrip("|").strip()
-                    rat_part = parts[1].strip()
-                    validated_act = ActionCatalog.validate_action(act_part)
-                    full_rationale = f"{rat_part} [RAG Grounded: {rag_context_str}]" if rag_context_str else rat_part
-                    return validated_act, full_rationale
+                # Check for catalog action mentioned in LLM response
+                detected_act = base_action
+                for cat_act in ActionCatalog.BOUNDED_ACTION_CATALOG:
+                    if cat_act in resp:
+                        detected_act = cat_act
+                        break
+                
+                if "RATIONALE:" in resp:
+                    rat_part = resp.split("RATIONALE:", 1)[1].strip()
+                elif "ACTION:" in resp:
+                    rat_part = resp.split("ACTION:", 1)[1].strip()
                 else:
-                    full_rationale = f"{resp.strip()} [RAG Grounded: {rag_context_str}]" if rag_context_str else resp.strip()
-                    return base_action, full_rationale
+                    rat_part = resp.strip()
+
+                # Clean rationale to first 200 chars if LLM returned long markdown
+                clean_rat = rat_part.split("\n")[0].strip() if "\n" in rat_part else rat_part.strip()
+                if len(clean_rat) > 250:
+                    clean_rat = clean_rat[:247] + "..."
+
+                full_rationale = f"{clean_rat} [RAG Grounded: {rag_context_str}]" if rag_context_str else clean_rat
+                return detected_act, full_rationale
             except Exception as e:
                 logger.warning(f"[DecisionComposer] LLM response parse exception: {e}")
 

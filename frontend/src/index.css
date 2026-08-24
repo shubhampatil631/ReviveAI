@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap');
 
 :root {
-  /* Razorpay Palette */
+  /* Razorpay Palette & Design Tokens */
   --rz-navy-dark: #02042b;
   --rz-navy-header: #070d24;
   --rz-navy-surface: #0c1433;
@@ -25,6 +25,9 @@
   --rz-rose-light: #fff1f2;
   --rz-rose-border: #fecdd3;
 
+  --rz-purple: #8b5cf6;
+  --rz-purple-light: #f3e8ff;
+
   --rz-bg-page: #f8fafc;
   --rz-bg-card: #ffffff;
   --rz-border-color: #e2e8f0;
@@ -35,8 +38,9 @@
   --text-muted: #64748b;
   --text-dim: #94a3b8;
 
-  --rz-card-shadow: 0 10px 30px -5px rgba(2, 132, 199, 0.07), 0 4px 12px rgba(0, 0, 0, 0.03);
-  --rz-card-shadow-hover: 0 20px 40px -8px rgba(2, 132, 199, 0.14), 0 8px 16px rgba(0, 0, 0, 0.05);
+  --rz-card-shadow: 0 10px 30px -5px rgba(2, 132, 199, 0.06), 0 4px 12px rgba(0, 0, 0, 0.03);
+  --rz-card-shadow-hover: 0 20px 45px -8px rgba(2, 132, 199, 0.12), 0 8px 20px rgba(0, 0, 0, 0.06);
+  --rz-glass-shadow: 0 20px 50px rgba(2, 4, 43, 0.35);
 }
 
 html, body, #root {
@@ -64,12 +68,49 @@ h1, h2, h3, h4, .font-heading {
   font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
-/* Razorpay Dark Hero Styling */
+/* Layout Utilities */
+.app-container {
+  min-height: 100vh;
+  width: 100%;
+  background: var(--rz-bg-page);
+  padding-bottom: 60px;
+  overflow-x: hidden;
+}
+
+.nav-container {
+  width: 100%;
+  padding: 18px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(10px);
+}
+
+.hero-banner {
+  width: 100%;
+  padding: 44px 40px 52px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 28px;
+}
+
+.main-content {
+  width: 100%;
+  padding: 36px 40px;
+  max-width: 1600px;
+  margin: 0 auto;
+}
+
+/* Hero Background & Glassmorphism */
 .rz-hero-bg {
   background-color: var(--rz-navy-dark);
   background-image: 
-    radial-gradient(circle at 50% -20%, rgba(2, 132, 199, 0.35) 0%, transparent 60%),
-    radial-gradient(circle at 85% 30%, rgba(0, 210, 255, 0.12) 0%, transparent 40%),
+    radial-gradient(circle at 50% -20%, rgba(2, 132, 199, 0.4) 0%, transparent 60%),
+    radial-gradient(circle at 88% 40%, rgba(0, 210, 255, 0.15) 0%, transparent 45%),
+    radial-gradient(circle at 10% 80%, rgba(139, 92, 246, 0.15) 0%, transparent 45%),
     linear-gradient(180deg, #070d24 0%, #02042b 100%);
   color: #ffffff;
   position: relative;
@@ -81,7 +122,32 @@ h1, h2, h3, h4, .font-heading {
   background-size: 32px 32px;
 }
 
-/* Razorpay Card Styling */
+.gradient-text {
+  background: linear-gradient(135deg, #38bdf8 0%, #00d2ff 50%, #818cf8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Responsive Tab Bar */
+.rz-tab-bar {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  white-space: nowrap;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none; /* Firefox */
+  padding: 10px 12px;
+  margin-bottom: 28px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+}
+
+.rz-tab-bar::-webkit-scrollbar {
+  display: none; /* Safari/Chrome */
+}
+
+/* Card Components */
 .rz-card {
   background: var(--rz-bg-card);
   border: 1px solid var(--rz-border-color);
@@ -94,34 +160,45 @@ h1, h2, h3, h4, .font-heading {
 .rz-card:hover {
   box-shadow: var(--rz-card-shadow-hover);
   border-color: #cbd5e1;
-  transform: translateY(-2px);
 }
 
-.rz-card-dark {
-  background: var(--rz-navy-surface);
-  border: 1px solid var(--rz-navy-border);
+.kpi-card {
+  position: relative;
+  background: #ffffff;
   border-radius: 16px;
-  color: #ffffff;
+  padding: 22px 24px;
+  border: 1px solid var(--rz-border-color);
+  box-shadow: var(--rz-card-shadow);
+  transition: all 0.25s ease;
+  overflow: hidden;
 }
 
-/* Razorpay Buttons */
+.kpi-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--rz-card-shadow-hover);
+  border-color: #cbd5e1;
+}
+
+/* Buttons */
 .btn-rz-primary {
   background: linear-gradient(135deg, #0284c7 0%, #0052cc 100%);
   color: #ffffff;
   border: none;
   padding: 10px 22px;
-  border-radius: 8px;
+  border-radius: 10px;
   font-weight: 700;
   font-size: 0.875rem;
   font-family: 'Plus Jakarta Sans', sans-serif;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
-  transition: all 0.2s ease;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   box-shadow: 0 4px 14px rgba(2, 132, 199, 0.35);
   position: relative;
   overflow: hidden;
+  white-space: nowrap;
 }
 
 .btn-rz-primary:hover {
@@ -130,33 +207,23 @@ h1, h2, h3, h4, .font-heading {
   background: linear-gradient(135deg, #0369a1 0%, #0040a8 100%);
 }
 
-.btn-rz-primary:active {
-  transform: translateY(0);
-}
-
-.btn-rz-primary .btn-arrow {
-  transition: transform 0.2s ease;
-}
-
-.btn-rz-primary:hover .btn-arrow {
-  transform: translateX(4px);
-}
-
 .btn-rz-secondary {
   background: #ffffff;
   color: var(--rz-navy-dark);
   border: 1px solid var(--rz-border-hover);
   padding: 10px 20px;
-  border-radius: 8px;
+  border-radius: 10px;
   font-weight: 600;
   font-size: 0.875rem;
   font-family: 'Plus Jakarta Sans', sans-serif;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
   transition: all 0.2s ease;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);
+  white-space: nowrap;
 }
 
 .btn-rz-secondary:hover {
@@ -167,29 +234,31 @@ h1, h2, h3, h4, .font-heading {
 }
 
 .btn-rz-outline-light {
-  background: rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.08);
   color: #ffffff;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.22);
   padding: 10px 20px;
-  border-radius: 8px;
+  border-radius: 10px;
   font-weight: 600;
   font-size: 0.875rem;
   font-family: 'Plus Jakarta Sans', sans-serif;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
   transition: all 0.2s ease;
-  backdrop-filter: blur(8px);
+  backdrop-filter: blur(10px);
+  white-space: nowrap;
 }
 
 .btn-rz-outline-light:hover {
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.18);
   border-color: #ffffff;
   transform: translateY(-1px);
 }
 
-/* Razorpay Badges */
+/* Badges */
 .rz-badge {
   padding: 5px 12px;
   border-radius: 20px;
@@ -200,6 +269,7 @@ h1, h2, h3, h4, .font-heading {
   align-items: center;
   gap: 6px;
   text-transform: uppercase;
+  white-space: nowrap;
 }
 
 .badge-recovered {
@@ -226,7 +296,7 @@ h1, h2, h3, h4, .font-heading {
   border: 1px solid #bae6fd;
 }
 
-/* Live Pulse Dot */
+/* Pulse Dot */
 .rz-pulse-dot {
   width: 8px;
   height: 8px;
@@ -235,6 +305,7 @@ h1, h2, h3, h4, .font-heading {
   box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
   animation: pulse-glow 1.8s infinite;
   display: inline-block;
+  flex-shrink: 0;
 }
 
 @keyframes pulse-glow {
@@ -252,14 +323,18 @@ h1, h2, h3, h4, .font-heading {
   }
 }
 
-/* Table Styling */
+/* Responsive Table & Card View Switcher */
 .table-container {
   width: 100%;
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
 }
 
 table {
   width: 100%;
+  min-width: 850px;
   border-collapse: collapse;
   text-align: left;
 }
@@ -273,6 +348,7 @@ th {
   color: #475569;
   background-color: #f1f5f9;
   border-bottom: 1px solid var(--rz-border-color);
+  white-space: nowrap;
 }
 
 td {
@@ -290,7 +366,32 @@ tr:hover td {
   background-color: #f8fafc;
 }
 
-/* Inputs and Selects */
+.desktop-table-view {
+  display: block;
+}
+
+.mobile-card-view {
+  display: none;
+}
+
+/* Mobile Case Card Styling */
+.mobile-case-card {
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 14px;
+  padding: 18px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.mobile-case-card:hover {
+  border-color: #0284c7;
+  box-shadow: 0 8px 20px rgba(2, 132, 199, 0.1);
+  transform: translateY(-2px);
+}
+
+/* Inputs & Selects */
 input, select {
   font-family: 'Inter', sans-serif;
   outline: none;
@@ -302,7 +403,7 @@ input:focus, select:focus {
   box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.2) !important;
 }
 
-/* Modal / Drawer Overlay */
+/* Drawer Overlay & Content */
 .drawer-overlay {
   position: fixed;
   inset: 0;
@@ -316,11 +417,11 @@ input:focus, select:focus {
 
 .drawer-content {
   width: 100%;
-  max-width: 660px;
+  max-width: 680px;
   height: 100%;
   background: #ffffff;
   border-left: 1px solid var(--rz-border-color);
-  padding: 32px;
+  padding: 36px;
   overflow-y: auto;
   box-shadow: -15px 0 40px rgba(0, 0, 0, 0.2);
   animation: slideIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
@@ -338,7 +439,7 @@ input:focus, select:focus {
 
 .timeline-item {
   position: relative;
-  padding-left: 36px;
+  padding-left: 38px;
   padding-bottom: 28px;
   border-left: 2px solid #e2e8f0;
 }
@@ -376,4 +477,120 @@ input:focus, select:focus {
 
 ::-webkit-scrollbar-thumb:hover {
   background: #94a3b8;
+}
+
+/* ==========================================================================
+   Comprehensive Responsive Media Queries
+   ========================================================================== */
+
+/* Tablet & Smaller Laptops (<= 1024px) */
+@media (max-width: 1024px) {
+  .nav-container {
+    padding: 16px 24px;
+  }
+
+  .hero-banner {
+    padding: 32px 24px 40px 24px;
+    gap: 20px;
+  }
+
+  .main-content {
+    padding: 28px 24px;
+  }
+
+  .drawer-content {
+    max-width: 580px;
+    padding: 28px;
+  }
+}
+
+/* Mobile & Tablets (<= 768px) */
+@media (max-width: 768px) {
+  .desktop-table-view {
+    display: none !important;
+  }
+
+  .mobile-card-view {
+    display: flex !important;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .nav-container {
+    padding: 14px 16px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+  }
+
+  .nav-container > div:last-child {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .nav-container .btn-rz-outline-light, 
+  .nav-container .btn-rz-primary {
+    flex: 1;
+    padding: 8px 12px;
+    font-size: 0.8rem;
+  }
+
+  .hero-banner {
+    padding: 24px 16px 32px 16px;
+  }
+
+  .hero-banner h1 {
+    font-size: 1.85rem !important;
+  }
+
+  .main-content {
+    padding: 20px 16px;
+  }
+
+  .rz-card {
+    padding: 18px 16px !important;
+    border-radius: 12px;
+  }
+
+  .drawer-content {
+    width: 100%;
+    max-width: 100%;
+    padding: 20px 16px;
+  }
+
+  .drawer-overview-grid {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+  }
+
+  .kpi-grid {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)) !important;
+    gap: 12px !important;
+  }
+}
+
+/* Extra Small Phones (<= 480px) */
+@media (max-width: 480px) {
+  .hero-banner h1 {
+    font-size: 1.5rem !important;
+  }
+
+  .hero-metrics-banner {
+    width: 100%;
+    flex-direction: column;
+  }
+
+  .hero-metrics-banner > div {
+    width: 100%;
+  }
+
+  .kpi-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .btn-rz-primary, .btn-rz-secondary, .btn-rz-outline-light {
+    padding: 8px 14px;
+    font-size: 0.8rem;
+  }
 }
