@@ -1,7 +1,7 @@
 # ReviveAI — Autonomous Revenue Recovery Agent
 
 [![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://github.com/)
-[![Architecture](https://img.shields.io/badge/Architecture-LangGraph%20%2B%20MCP%20Guard-indigo.svg)](https://github.com/)
+[![Architecture](<https://img.shields.io/badge/Architecture-LangGraph%20%2B%20MCP%20Guard-indigo.svg>)](https://github.com/)
 
 ReviveAI is a multi-agent autonomous revenue recovery platform built on a **LangGraph state machine** and **CrewAI agent roles**, gated by a **deterministic (non-LLM) Model Context Protocol (MCP) Compliance Server**.
 
@@ -64,6 +64,7 @@ reviveai/
 ## Quickstart & Running Locally
 
 ### Option 1: Using Docker Compose
+
 ```bash
 # Set optional LLM keys in your environment or .env file
 export GROQ_API_KEY="your_groq_key"
@@ -72,22 +73,24 @@ export GEMINI_API_KEY="your_gemini_key"
 # Start MongoDB, FastAPI backend, and React frontend
 docker-compose up --build
 ```
+
 Access the Dashboard at `http://localhost:3000` and API docs at `http://localhost:8000/docs`.
 
 ### Option 2: Running Backend & Frontend Directly
 
 1. **Install Backend Dependencies:**
+
    ```bash
    cd backend
    pip install -r requirements.txt
    ```
-
 2. **Start Backend Server:**
+
    ```bash
    python -m backend.app.main
    ```
-
 3. **Start React Frontend:**
+
    ```bash
    cd frontend
    npm install

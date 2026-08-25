@@ -1,0 +1,4 @@
+transaction_id,customer_id,customer_name,customer_email,customer_phone,event_type,amount,currency,failure_reason,payment_method,opt_out,created_at
+TXN_2001,CUST_601,Aarav Sharma,aarav.sharma@techstar.io,+919876501122,subscription_dunning,4999,INR,bank_decline,credit_card,false,2026-08-24T09:15:00Z
+TXN_2002,CUST_602,Pooja Hegde,pooja.h@dndsubscriber.com,+919765404455,subscription_dunning,7999,INR,insufficient_funds,upi,true,2026-08-24T10:15:00Z
+TXN_2003,CUST_603,Vikramaditya Rao,vikram@enterprisesolutions.com,+919556601122,overdue_invoice,85000,INR,invoice_terms_breach,bank_transfer,false,2026-08-24T11:00:00Z

@@ -1,7 +1,7 @@
 import json
 import logging
 from datetime import datetime
-from typing import Dict, Any, Tuple
+from typing import Dict, Any, Tuple, Optional
 from backend.app.db.mongo import get_db
 from backend.app.models.schemas import RecoveryCaseSchema
 from backend.app.llm.router import llm_router
@@ -169,21 +169,43 @@ class CaseCreator:
         risk_label: str,
         risk_score: float,
         recovery_prob: float,
-        reasoning_summary: str
+        reasoning_summary: str,
+        raw_event: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
         txn_str = str(txn_id or "TXN_INIT")
         case_id = f"CASE_{txn_str.replace('TXN_', '') if 'TXN_' in txn_str else txn_str}"
-        
+        raw_evt = raw_event or {}
+        raw_pl = raw_evt.get("raw_payload", {}) if isinstance(raw_evt.get("raw_payload"), dict) else {}
+
         db = get_db()
         cases_col = db.get_collection("recovery_cases")
         existing = await cases_col.find_one({"case_id": case_id})
 
-        if not existing:
-            cust_col = db.get_collection("customers")
-            cust = await cust_col.find_one({"customer_id": customer_id}) or {}
-            cust_name = cust.get("name", "Valued Customer")
-            cust_email = cust.get("email", "")
+        cust_col = db.get_collection("customers")
+        cust = await cust_col.find_one({"customer_id": customer_id}) or {}
+        cust_name = raw_evt.get("customer_name") or raw_pl.get("customer_name") or cust.get("name") or "Valued Customer"
+        cust_email = raw_evt.get("customer_email") or raw_pl.get("customer_email") or cust.get("email") or ""
+        cust_phone = raw_evt.get("customer_phone") or raw_pl.get("customer_phone") or cust.get("phone") or ""
 
+        if not cust and customer_id:
+            cust_doc = {
+                "customer_id": customer_id,
+                "name": cust_name,
+                "email": cust_email,
+                "phone": cust_phone,
+                "payment_methods": [raw_evt.get("payment_method", "card")],
+                "opt_out": bool(raw_evt.get("opt_out", False)),
+                "history": {
+                    "past_recoveries": 0,
+                    "past_failures": 1,
+                    "lifetime_value": amount * 2
+                }
+            }
+            await cust_col.insert_one(cust_doc)
+        elif cust and cust_name != "Valued Customer" and cust.get("name") != cust_name:
+            await cust_col.update_one({"customer_id": customer_id}, {"$set": {"name": cust_name, "email": cust_email, "phone": cust_phone}})
+
+        if not existing:
             new_case = RecoveryCaseSchema(
                 case_id=case_id,
                 transaction_id=txn_str,
@@ -199,6 +221,9 @@ class CaseCreator:
             ).model_dump()
             await cases_col.insert_one(new_case)
             logger.info(f"[CaseCreator] Created MongoDB RecoveryCase document: '{case_id}'")
+        else:
+            if cust_name != "Valued Customer" and existing.get("customer_name") != cust_name:
+                await cases_col.update_one({"case_id": case_id}, {"$set": {"customer_name": cust_name, "customer_email": cust_email}})
 
         # Output contract matching Section 4.2 specification
         return {
@@ -265,7 +290,8 @@ class DetectorAgent:
             risk_label=risk_label,
             risk_score=risk_score,
             recovery_prob=recovery_prob,
-            reasoning_summary=reasoning_summary
+            reasoning_summary=reasoning_summary,
+            raw_event=event_data
         )
 
         return result

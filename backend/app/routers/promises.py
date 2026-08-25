@@ -16,35 +16,58 @@ async def create_promise(payload: Dict[str, Any]):
     4.8.1 Promise State Machine: Logs a written/verbal payment commitment from a customer.
     State transition: case -> promised.
     """
-    case_id = payload.get("case_id")
-    amount = float(payload.get("promised_amount", 0.0))
-    days_due = int(payload.get("days_due", 3))
+    case_id = str(payload.get("case_id", "")).strip()
+    try:
+        amount = float(payload.get("promised_amount", 0.0))
+    except (ValueError, TypeError):
+        amount = 0.0
+    try:
+        days_due = int(payload.get("days_due", 3))
+    except (ValueError, TypeError):
+        days_due = 3
 
     if not case_id:
         raise HTTPException(status_code=400, detail="case_id is required")
 
-    due_date = datetime.utcnow() + timedelta(days=days_due)
-    promise_id = f"PROM_{case_id[-4:]}_{datetime.utcnow().strftime('%M%S')}_{uuid.uuid4().hex[:6]}"
-
-    promise_doc = PromiseToPaySchema(
-        promise_id=promise_id,
-        case_id=case_id,
-        promised_amount=amount,
-        due_date=due_date,
-        status="promised"
-    ).model_dump()
-
     db = get_db()
+    cases_col = db.get_collection("recovery_cases")
+
+    # Smart lookup for case_id (handles CASE_LIVE_03, TXN_LIVE_03, LIVE_03)
+    case_doc = await cases_col.find_one({"case_id": case_id})
+    if not case_doc:
+        clean_id = case_id.replace('CASE_', '').replace('TXN_', '')
+        case_doc = await cases_col.find_one({"$or": [
+            {"case_id": f"CASE_{clean_id}"},
+            {"transaction_id": case_id},
+            {"transaction_id": f"TXN_{clean_id}"},
+            {"case_id": {"$regex": clean_id, "$options": "i"}}
+        ]})
+        if case_doc:
+            case_id = case_doc["case_id"]
+
+    due_date = datetime.utcnow() + timedelta(days=days_due)
+    clean_suffix = case_id[-4:] if len(case_id) >= 4 else case_id
+    promise_id = f"PROM_{clean_suffix}_{datetime.utcnow().strftime('%M%S')}_{uuid.uuid4().hex[:6]}"
+
+    promise_doc = {
+        "promise_id": promise_id,
+        "case_id": case_id,
+        "promised_amount": amount,
+        "due_date": due_date.isoformat(),
+        "status": "promised",
+        "created_at": datetime.utcnow().isoformat()
+    }
+
     col = db.get_collection("promises")
     await col.insert_one(promise_doc)
 
     # Update case status to promised_to_pay
-    cases_col = db.get_collection("recovery_cases")
     await cases_col.update_one(
         {"case_id": case_id},
         {"$set": {"status": "promised_to_pay", "updated_at": datetime.utcnow().isoformat()}}
     )
 
+    promise_doc.pop("_id", None)
     return {"message": "Promise-to-Pay registered", "promise": promise_doc}
 
 @router.get("")

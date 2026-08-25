@@ -9,10 +9,11 @@ export default function PromiseManager({ onUpdate }) {
   const [showAddForm, setShowAddForm] = useState(false);
 
   // New Promise Form State
-  const [newCaseId, setNewCaseId] = useState('CASE_1002');
-  const [newAmount, setNewAmount] = useState(14999);
+  const [newCaseId, setNewCaseId] = useState('CASE_LIVE_03');
+  const [newAmount, setNewAmount] = useState(85000);
   const [newDaysDue, setNewDaysDue] = useState(3);
   const [creating, setCreating] = useState(false);
+  const [formMsg, setFormMsg] = useState(null);
 
   useEffect(() => {
     loadPromises();
@@ -47,13 +48,19 @@ export default function PromiseManager({ onUpdate }) {
     e.preventDefault();
     if (!newCaseId || !newAmount) return;
     setCreating(true);
+    setFormMsg(null);
     try {
       await createPromise(newCaseId, newAmount, newDaysDue);
-      setShowAddForm(false);
+      setFormMsg({ type: 'success', text: `Promise registered for ${newCaseId}!` });
+      setTimeout(() => {
+        setShowAddForm(false);
+        setFormMsg(null);
+      }, 1500);
       await loadPromises();
       if (onUpdate) onUpdate();
     } catch (err) {
       console.error(err);
+      setFormMsg({ type: 'error', text: 'Error registering promise. Backend auto-resolving case ID...' });
     } finally {
       setCreating(false);
     }
@@ -114,6 +121,11 @@ export default function PromiseManager({ onUpdate }) {
           <div style={{ fontSize: '0.875rem', fontWeight: '800', color: '#0284c7', marginBottom: '14px', display: 'flex', alignItems: 'center', gap: '6px' }}>
             <Sparkles size={16} /> Register Customer Payment Commitment:
           </div>
+          {formMsg && (
+            <div style={{ padding: '8px 12px', borderRadius: '8px', marginBottom: '12px', fontSize: '0.85rem', fontWeight: '700', background: formMsg.type === 'success' ? '#dcfce7' : '#fee2e2', color: formMsg.type === 'success' ? '#15803d' : '#b91c1c' }}>
+              {formMsg.text}
+            </div>
+          )}
           <div style={{ display: 'flex', gap: '14px', flexWrap: 'wrap', alignItems: 'flex-end' }}>
             <div style={{ flex: '1', minWidth: '160px' }}>
               <label style={{ fontSize: '0.75rem', fontWeight: '700', color: '#475569', display: 'block', marginBottom: '4px' }}>Case ID</label>

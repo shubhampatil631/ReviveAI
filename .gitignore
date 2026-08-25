@@ -29,3 +29,16 @@ frontend/build/
 .idea/
 .DS_Store
 Thumbs.db
+
+# Media & Video files
+*.mp4
+*.mov
+*.avi
+*.mkv
+*.webm
+
+# ChromaDB local cache
+chroma_data/
+backend/chroma_data/
+
+
